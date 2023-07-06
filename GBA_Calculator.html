@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Calculator</title>
+    </head>
+    <style>
+        body{
+            background-color: rgb(54, 51, 46);
+            font-style: italic;
+            font-size: larger;
+            color: white;
+            text-align: center;
+        }
+        #header{
+            font-size: 25px;
+        }
+        #gba-calculator{
+            border: 3px solid white;
+            width: 60%;
+            display: inline-block;
+            border-radius: 13px;
+            padding: 8px;
+        }
+        .subjects{
+            margin: 6px;
+            border: 2px solid #ffffff;
+            border-radius: 6px;
+            padding: 4px;
+        }
+        .select{
+
+            font-style: italic;
+            font-weight: bolder;
+            border: 2px solid #0c0909;
+            border-radius: 7px;
+            text-align: center;
+            
+            
+        }
+        .buttons{
+            background-color: white;
+            border: 2px solid black;
+            border-radius: 7px;
+            font-style: italic;
+            font-weight: bolder;
+        }
+        
+    </style>
+    <body>
+        <p id="header">write down all the taken courses so far to calculate ur GPA</p>
+        <section id="gba-calculator">
+            
+            <div id="allSubjects">
+                <div class="subjects">
+                <input type="text" class="select" placeholder="The subject's name">
+                <select id="grade-1" class="select">
+                    <option>THE GRADE YOU GOT</option>
+                    <option value="4.3">A+</option>
+                    <option value="4">A</option>
+                    <option value="3.7">A-</option>
+                    <option value="3.3">B+</option>
+                    <option value="3">B</option>
+                    <option value="2.7">B-</option>
+                    <option value="2.3">C+</option>
+                    <option value="2">C</option>
+                    <option value="1.7">C-</option>
+                    <option value="1.3">D+</option>
+                    <option value="1">D</option>
+                    <option value="0.7">D-</option>
+                    <option value="0">F</option>
+                </select>
+                <select id="subject-1-hours" class="select">
+                    <option >NUMPER OF CREDIT HOURS</option>
+                    <option value="3">3</option>
+                    <option value="2">2</option>
+                    <option value="1">1 </option>
+                </select>
+                </div>
+            </div>
+        
+      
+        <button id="addSubject-Btn" onclick="addingSubjects()" class="buttons">ADD SUBJECTS</button>
+        <button id = "getGBA" onclick="gettingGRADES()" class="buttons" >CALCULATE IT..!</button>
+        </section>
+    </body>
+    <script>
+        
+        let currentSubjects = document.querySelector("#allSubjects").innerHTML ;
+        let numOfSubjects = "1";          
+        
+            
+        function addingSubjects(){
+            numOfSubjects = `${parseInt(numOfSubjects) + 1}` ;
+            let newSubject = document.createElement("div");
+            newSubject.innerHTML= `
+                <div class="subjects" >
+                    <input type="text" class="select" placeholder="The subject's name">
+                    <select id="grade-${numOfSubjects}" class="select">
+                        <option>THE GRADE YOU GOT</option>
+                        <option value="4.3">A+</option>
+                        <option value="4">A</option>
+                        <option value="3.7">A-</option>
+                        <option value="3.3">B+</option>
+                        <option value="3">B</option>
+                        <option value="2.7">B-</option>
+                        <option value="2.3">C+</option>
+                        <option value="2">C</option>
+                        <option value="1.7">C-</option>
+                        <option value="1.3">D+</option>
+                        <option value="1">D</option>
+                        <option value="0.7">D-</option>
+                        <option value="0">F</option>
+                    </select>
+                    <select id="subject-${numOfSubjects}-hours" class="select">
+                        <option >NUMPER OF CREDIT HOURS</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1 </option>
+                    </select>
+                    </div>
+                    
+                `
+                document.getElementById("allSubjects").appendChild(newSubject ) ;
+        
+        } 
+        
+        let isGBAshown = false ;
+       
+         function gettingGRADES(){
+
+            let totalGradePoints = 0 ;
+            let totalCreditHours = 0 ;
+            
+
+            
+            for(i=1 ; i <= numOfSubjects; i++ ){
+                    totalCreditHours+= parseFloat(document.getElementById(`subject-${i}-hours`).value);
+                    totalGradePoints+=(parseFloat(document.getElementById(`subject-${i}-hours`).value)*parseFloat(document.getElementById(`grade-${i}`).value))  
+                }
+                
+            if(!(totalGradePoints / totalCreditHours) ){alert("complete omm eldata")}
+            else{
+                let shownigTheGrade = document.createElement("div")
+                shownigTheGrade.innerHTML = `<p id="the-grade-field"> you got : ${(totalGradePoints / totalCreditHours).toFixed(3)} </p>`;
+                if(!isGBAshown){
+                    isGBAshown = true ;
+                    document.getElementById("gba-calculator").appendChild(shownigTheGrade)
+            }
+            else{
+                document.getElementById("the-grade-field").innerHTML= ` you got : ${(totalGradePoints / totalCreditHours).toFixed(3)} </p>` ;
+            }
+         
+         }}
+        
+    </script>
+</html>
